@@ -55,6 +55,7 @@ document.querySelector(".btn").addEventListener("click", () => {
 
 document.querySelector(".btn-canvas").addEventListener("click", () => {
   canvas.classList.remove("hidden");
+  btnCanvas.disabled = true;
   const ctx = document.querySelector("#diagram").getContext("2d");
   new Chart(ctx, {
     type: "line",
