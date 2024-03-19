@@ -7,6 +7,13 @@
     <link rel="stylesheet" href="./countSort.css" />
   </head>
   <body>
+    <div class="module-result">
+      <button class="close-module">Закрити</button>
+      <h1 class="text-entry">Початковий</h1>
+      <div class="entry">12</div>
+      <h1 class="text-result">Посортований</h1>
+      <div class="result">12</div>
+    </div>
     <div class="nav">
       <nav>
         <a href="../index.html">До головної</a>
@@ -25,10 +32,17 @@
         </p>
         <button class="btn">Розрахувати</button>
         <button class="btn-canvas">Діаграма</button>
+        <button class="btn-result">Результат</button>
       </div>
     </div>
-    <div class="canvas">
-      <canvas id="diagram" width="300px" height="100px"></canvas>
+
+    <div class="canvas-container">
+      <div class="canvas">
+        <canvas id="diagram" width="300px" height="100px"></canvas>
+      </div>
+      <div class="canvas2">
+        <canvas id="diagram2" width="300px" height="100px"></canvas>
+      </div>
     </div>
     <div class="clear"><button class="btn-clear">Очистити</button></div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
