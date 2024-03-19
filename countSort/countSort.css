@@ -67,6 +67,7 @@ body {
   justify-content: space-evenly;
 }
 .clear {
+  margin-top: 20px;
   text-align: center;
 }
 .entry,
