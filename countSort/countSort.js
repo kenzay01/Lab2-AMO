@@ -2,6 +2,9 @@
 const dataTime = [];
 const dataNumber = [];
 const dataTimeTeor = [];
+const sizes = [
+  10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000,
+];
 const inputMaxValue = document.querySelector("#input");
 const btn = document.querySelector(".btn");
 const btnCanvas = document.querySelector(".btn-canvas");
@@ -51,7 +54,7 @@ document.querySelector(".btn").addEventListener("click", () => {
     return;
   }
   for (let i = 1; i <= 10; i++) {
-    const number = i * 10000;
+    const number = sizes[i - 1];
     const { arrey, result, timeToDo } = countSort(
       Number(inputMaxValue.value),
       number
@@ -60,8 +63,9 @@ document.querySelector(".btn").addEventListener("click", () => {
       textEntry.textContent = `${arrey.join(" ")}`;
       textResult.textContent = `${result.join(" ")}`;
     }
-    console.log(result, timeToDo);
-    const timeToDoTeor = number + Number(inputMaxValue.value);
+    const timeToDoTeor =
+      (number + Number(inputMaxValue.value)) / Math.max(...sizes);
+    console.log(timeToDoTeor);
     dataTimeTeor.push(timeToDoTeor);
     dataTime.push(timeToDo);
     dataNumber.push(number);
@@ -136,4 +140,21 @@ document.addEventListener("keydown", (e) => {
       moduleResult.classList.add("hidden");
     }
   }
+});
+fileInput.addEventListener("change", (e) => {
+  const file = e.target.files[0];
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const numbers = e.target.result.split(" ").map((el) => Number(el));
+    if (
+      numbers.length >= 1 &&
+      numbers.every((el) => !isNaN(parseInt(el, 10)))
+    ) {
+      inputMaxValue.value = numbers[0];
+    } else {
+      alert("Введіть коректне значення!");
+      return;
+    }
+  };
+  reader.readAsText(file);
 });
