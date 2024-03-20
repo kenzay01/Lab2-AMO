@@ -15,20 +15,19 @@ const textEntry = document.querySelector(".entry");
 const textResult = document.querySelector(".result");
 const buttonResult = document.querySelector(".btn-result");
 const closeModule = document.querySelector(".close-module");
+
 canvas.classList.add("hidden");
-canva2.classList.add("hidden");
 moduleResult.classList.add("hidden");
+
 function countSort(maxValue, arrLength) {
   const arr = new Array(arrLength)
     .fill(0)
     .map(() => Math.floor(Math.random() * maxValue) + 1);
   const countArray = new Array(maxValue + 1).fill(0);
-  // Початок відліку сортування
   const startTime = performance.now();
   for (let i = 0; i < arrLength; i++) {
     countArray[arr[i]]++;
   }
-
   for (let i = 1; i <= maxValue; i++) {
     countArray[i] += countArray[i - 1];
   }
@@ -41,6 +40,7 @@ function countSort(maxValue, arrLength) {
   const endTime = performance.now();
   return { array: arr, result: outputArray, timeToDo: endTime - startTime };
 }
+
 document.querySelector(".btn").addEventListener("click", () => {
   if (
     inputMaxValue.value === "" ||
@@ -53,23 +53,27 @@ document.querySelector(".btn").addEventListener("click", () => {
     alert("Введіть коректне значення!");
     return;
   }
-  for (let i = 1; i <= 10; i++) {
+  for (let i = 1; i <= sizes.length; i++) {
     const number = sizes[i - 1];
     const { array, result, timeToDo } = countSort(
       Number(inputMaxValue.value),
       number
     );
+    // console.log(array, result, timeToDo);
     if (i === 1) {
       textEntry.textContent = `${array.join(" ")}`;
       textResult.textContent = `${result.join(" ")}`;
     }
-    const timeToDoTeor =
-      (number + Number(inputMaxValue.value)) / Math.max(...sizes);
-    console.log(timeToDoTeor);
+    const timeToDoTeor = number + Number(inputMaxValue.value);
     dataTimeTeor.push(timeToDoTeor);
     dataTime.push(timeToDo);
     dataNumber.push(number);
   }
+  const scale = Math.max(...dataTimeTeor) / Math.max(...dataTime);
+  console.log(scale);
+  dataTimeTeor.forEach((el, i) => {
+    dataTimeTeor[i] = el / scale;
+  });
   btn.disabled = true;
   btnCanvas.classList.add("active");
   buttonResult.classList.add("active");
@@ -77,10 +81,8 @@ document.querySelector(".btn").addEventListener("click", () => {
 
 document.querySelector(".btn-canvas").addEventListener("click", () => {
   canvas.classList.remove("hidden");
-  canva2.classList.remove("hidden");
   btnCanvas.disabled = true;
   const ctx = document.querySelector("#diagram").getContext("2d");
-  const ctx2 = document.querySelector("#diagram2").getContext("2d");
   new Chart(ctx, {
     type: "line",
     data: {
@@ -92,21 +94,6 @@ document.querySelector(".btn-canvas").addEventListener("click", () => {
           borderColor: "rgba(255, 99, 132, 1)",
           borderWidth: 2,
         },
-      ],
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true,
-        },
-      },
-    },
-  });
-  new Chart(ctx2, {
-    type: "line",
-    data: {
-      labels: dataNumber,
-      datasets: [
         {
           label: "Count Sort Teor",
           data: dataTimeTeor,
@@ -128,12 +115,15 @@ document.querySelector(".btn-canvas").addEventListener("click", () => {
 document.querySelector(".btn-clear").onclick = () => {
   window.location.reload();
 };
+
 buttonResult.addEventListener("click", () => {
   moduleResult.classList.remove("hidden");
 });
+
 closeModule.addEventListener("click", () => {
   moduleResult.classList.add("hidden");
 });
+
 document.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     if (!moduleResult.classList.contains("hidden")) {
@@ -141,6 +131,7 @@ document.addEventListener("keydown", (e) => {
     }
   }
 });
+
 fileInput.addEventListener("change", (e) => {
   const file = e.target.files[0];
   const reader = new FileReader();
