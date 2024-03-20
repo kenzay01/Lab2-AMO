@@ -39,7 +39,7 @@ function countSort(maxValue, arrLength) {
     countArray[arr[i]]--;
   }
   const endTime = performance.now();
-  return { arrey: arr, result: outputArray, timeToDo: endTime - startTime };
+  return { array: arr, result: outputArray, timeToDo: endTime - startTime };
 }
 document.querySelector(".btn").addEventListener("click", () => {
   if (
@@ -55,12 +55,12 @@ document.querySelector(".btn").addEventListener("click", () => {
   }
   for (let i = 1; i <= 10; i++) {
     const number = sizes[i - 1];
-    const { arrey, result, timeToDo } = countSort(
+    const { array, result, timeToDo } = countSort(
       Number(inputMaxValue.value),
       number
     );
     if (i === 1) {
-      textEntry.textContent = `${arrey.join(" ")}`;
+      textEntry.textContent = `${array.join(" ")}`;
       textResult.textContent = `${result.join(" ")}`;
     }
     const timeToDoTeor =
